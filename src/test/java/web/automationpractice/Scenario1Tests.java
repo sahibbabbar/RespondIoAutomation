@@ -18,7 +18,7 @@ import java.util.Random;
 /**
  * Scenario 1: Users are able to search for an item using the search bar.
  */
-public class ScenarioOneTests extends CommonWebTest {
+public class Scenario1Tests extends CommonWebTest {
 
     public static final String[] VALID_SEARCH_TEXTS = {"skirt", "printed", "shirt", "dress"};
     public static final String[] INVALID_SEARCH_TEXTS = {"1234", "xkml1232", "!#@#$%#%"};

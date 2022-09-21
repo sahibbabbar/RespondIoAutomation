@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import platform.web.common.BrowserDocumentReady;
 
 import java.time.Duration;
 
@@ -42,5 +43,21 @@ public class CommonWebTest {
     public void scroll(WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView();", element);
+    }
+
+    public void pleaseWait() {
+        sleepFor(1);
+        wait.pollingEvery(Duration.ofMillis(125)).until(ExpectedConditions.and(
+                new BrowserDocumentReady()
+        ));
+    }
+
+    public void sleepFor(int second) {
+        try {
+            second = second * 1000;
+            Thread.sleep(second);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
     }
 }
