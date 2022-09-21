@@ -30,8 +30,8 @@ public class Scenario3Tests extends CommonWebTest {
 
         // Validate that the item has successfully been added to the cart
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(ProductScreen.CART_MODAL)));
-        Assert.assertEquals(driver.findElement(By.xpath(ProductScreen.SELECTED_PRODUCT)).getText(), productName, "Verify the correct product successfully added to the shopping cart");
-        Assert.assertEquals(driver.findElement(By.xpath(ProductScreen.SELECTED_PRODUCT_HEADER)).getText().trim(), "There is 1 item in your cart.", "Verify the correct heading is displayed");
+        verify.assertEquals(driver.findElement(By.xpath(ProductScreen.SELECTED_PRODUCT)).getText(), productName, "Verify the correct product successfully added to the shopping cart");
+        verify.assertEquals(driver.findElement(By.xpath(ProductScreen.SELECTED_PRODUCT_HEADER)).getText().trim(), "There is 1 item in your cart.", "Verify the correct heading is displayed");
     }
 
     /**

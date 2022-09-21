@@ -28,28 +28,29 @@ public class Scenario2Tests extends CommonWebTest {
         driver.get(Urls.URL_HOME_PAGE);
         driver.findElement(By.xpath(HomeScreen.TOP_MENU_WOMEN_LINK)).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(WomenCategoryScreen.WOMEN_CATEGORY_TITLE)));
-        Assert.assertEquals(driver.findElement(By.xpath(ProductScreen.BREADCRUMB)).getText().trim(), "WOMEN", "Verify the breadcrumb displaying the correct value.");
+        verify.assertEquals(driver.findElement(By.xpath(ProductScreen.BREADCRUMB)).getText().trim(), "WOMEN", "Verify the breadcrumb displaying the correct value.");
 
         // Filter Categories and verify the breadcrumb content
         filterCategories();
         scroll(By.xpath(HomeScreen.TOP_MENU_WOMEN_LINK));
         String categoryName = driver.findElement(By.xpath(FilterPanel.CATEGORIES + "[" + RANDOM_CATEGORY_INDEX + "]/label//a")).getText().split(" ")[0].toLowerCase();
-        Assert.assertEquals(driver.findElement(By.xpath(ProductScreen.BREADCRUMB)).getText(), "WOMEN > CATEGORIES " + categoryName.toUpperCase(), "Verify the breadcrumb displaying the correct value.");
+        verify.assertEquals(driver.findElement(By.xpath(ProductScreen.BREADCRUMB)).getText(), "WOMEN > CATEGORIES " + categoryName.toUpperCase(), "Verify the breadcrumb displaying the correct value.");
 
         // Filter Colors and verify the breadcrumb content
         filterColors();
         scroll(By.xpath(HomeScreen.TOP_MENU_WOMEN_LINK));
         Integer colorCount = Integer.parseInt(driver.findElement(By.xpath(FilterPanel.COLORS + "[" + RANDOM_COLOR_INDEX + "]/label//span")).getText().replaceAll("\\p{P}", ""));
         String colorName = driver.findElement(By.xpath(FilterPanel.COLORS + "[" + RANDOM_COLOR_INDEX + "]/label//a")).getText().split(" ")[0].toLowerCase();
-        Assert.assertEquals(driver.findElement(By.xpath(ProductScreen.BREADCRUMB)).getText(), "WOMEN > CATEGORIES " + categoryName.toUpperCase() + " > COLOR " + colorName.toUpperCase(), "Verify the breadcrumb displaying the correct value.");
+        verify.assertEquals(driver.findElement(By.xpath(ProductScreen.BREADCRUMB)).getText(), "WOMEN > CATEGORIES " + categoryName.toUpperCase() + " > COLOR " + colorName.toUpperCase(), "Verify the breadcrumb displaying the correct value.");
 
+        pleaseWait();
         Integer categoryCount = Integer.parseInt(driver.findElement(By.xpath(FilterPanel.CATEGORIES + "[" + RANDOM_CATEGORY_INDEX + "]/label//span")).getText().replaceAll("\\p{P}", ""));
-        Assert.assertEquals(categoryCount, colorCount, "Verify the count of both the filters is equal");
+        verify.assertEquals(categoryCount, colorCount, "Verify the count of both the filters is equal");
 
         List<WebElement> productElements = driver.findElements(By.xpath(ProductScreen.PRODUCT_CONTAINER));
         if (productElements.size() != 0) {
             for (WebElement productElement : productElements) {
-                Assert.assertTrue(productElement.findElement(By.xpath(".//a[contains(@href,'" + colorName + "')]")).isDisplayed(), "Verify the filtered color is same in the listed product");
+                verify.assertTrue(productElement.findElement(By.xpath(".//a[contains(@href,'" + colorName + "')]")).isDisplayed(), "Verify the filtered color is same in the listed product");
             }
         }
     }
@@ -63,7 +64,8 @@ public class Scenario2Tests extends CommonWebTest {
 
         if (categories.size() != 0) {
             driver.findElement(By.xpath(FilterPanel.CATEGORIES + "[" + RANDOM_CATEGORY_INDEX + "]")).click();
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='enabled_filters']//li[1]")));
+            scroll(By.xpath(ProductScreen.FILTER_SECTION + "//li[1]"));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(ProductScreen.FILTER_SECTION + "//li[1]")));
         }
     }
 
@@ -72,12 +74,15 @@ public class Scenario2Tests extends CommonWebTest {
      */
     private void filterColors() {
         scroll(By.xpath(FilterPanel.COLORS_FILTER_HEADING));
+        pleaseWait();
         List<WebElement> colors = driver.findElements(By.xpath(FilterPanel.COLORS));
 
         if (colors.size() != 0) {
             RANDOM_COLOR_INDEX = new Random().nextInt(colors.size()) + 1;
-            driver.findElement(By.xpath(FilterPanel.COLORS + "[" + RANDOM_COLOR_INDEX + "]")).click();
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='enabled_filters']//li[2]")));
+            pleaseWait();
+            driver.findElement(By.xpath(FilterPanel.COLORS + "[" + RANDOM_COLOR_INDEX + "]/input")).click();
+            scroll(By.xpath(ProductScreen.FILTER_SECTION + "//li[2]"));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(ProductScreen.FILTER_SECTION + "//li[2]")));
         }
     }
 }

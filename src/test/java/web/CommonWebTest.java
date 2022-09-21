@@ -1,5 +1,7 @@
 package web;
 
+import Utils.Verify;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -19,11 +21,14 @@ public class CommonWebTest {
     public Actions action;
     public WebDriverWait wait;
 
+    public Verify verify;
+
     @BeforeClass(alwaysRun = true)
-    public void beforeClass() {
-        driver = new ChromeDriver();
+    public synchronized void beforeClass() {
+        verify = new Verify();
+        startBrowser();
         action = new Actions(driver);
-        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(30));
     }
 
     @AfterClass(alwaysRun = true)
@@ -31,6 +36,12 @@ public class CommonWebTest {
         if (driver != null) {
             driver.quit();
         }
+    }
+
+    private void startBrowser() {
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
     }
 
     public void scroll(By by) {

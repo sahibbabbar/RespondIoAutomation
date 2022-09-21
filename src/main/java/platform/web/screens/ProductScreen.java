@@ -7,6 +7,8 @@ public class ProductScreen {
     public static final String PRODUCT_NAME = "//a[@class='product-name']";
     public static final String BREADCRUMB = "//div[@id='center_column']//h1/span[@class='cat-name']";
     public static final String CART_MODAL = "//div[@id='layer_cart']";
+
+    public static final String FILTER_SECTION = "//div[@id='enabled_filters']";
     public static final String PRODUCT_CONTAINER = "//li/div[@class='product-container']";
     public static final String SEARCHED_TEXT_LABEL = "//div[@id='center_column']//span[@class='lighter']";
     public static final String SEARCHED_NO_RESULT_LABEL = "//div[@id='center_column']//p[contains(@class,'alert')]";

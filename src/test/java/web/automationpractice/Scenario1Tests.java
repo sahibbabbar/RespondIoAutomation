@@ -3,7 +3,6 @@ package web.automationpractice;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import platform.web.constants.Urls;
@@ -40,26 +39,28 @@ public class Scenario1Tests extends CommonWebTest {
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(ProductScreen.SEARCHED_TEXT_LABEL)));
         String actualTextLabel = driver.findElement(By.xpath(ProductScreen.SEARCHED_TEXT_LABEL)).getText().toLowerCase();
-        Assert.assertTrue(actualTextLabel.contains(searchText), "Verify the search label should match with the searched term");
+        verify.assertTrue(actualTextLabel.contains(searchText), "Verify the search label should match with the searched term");
 
         List<WebElement> productElements = driver.findElements(By.xpath(ProductScreen.SEARCHED_PRODUCTS));
         if (productElements.size() != 0) {
             for (WebElement productElement : productElements) {
                 if (productElement.getText().toLowerCase().contains(searchText)) {
-                    Assert.assertTrue(true, "Verify the product displayed contains the searched term.");
+                    verify.assertTrue(true, "Verify the product displayed contains the searched term.");
                 } else {
+                    scroll(productElement);
+
                     //Performing the mouse hover action on the product element.
                     action.moveToElement(productElement).perform();
 
                     wait.until(ExpectedConditions.visibilityOfElementLocated(ProductScreen.PRODUCT_QUICK_VIEW_LINK));
                     driver.findElement(ProductScreen.PRODUCT_QUICK_VIEW_LINK).click();
 
-                    //Waiting for the product quick view iframe modal visiblity.
+                    //Waiting for the product quick view iframe modal visibility.
                     wait.until(ExpectedConditions.visibilityOfElementLocated(ProductScreen.PRODUCT_QUICK_VIEW_IFRAME));
                     driver.switchTo().frame(driver.findElement(ProductScreen.PRODUCT_QUICK_VIEW_IFRAME));
                     wait.until(ExpectedConditions.visibilityOfElementLocated(ProductScreen.PRODUCT_SHORT_DESCRIPTION_TEXT));
                     String actualProductDescriptionContent = driver.findElement(ProductScreen.PRODUCT_SHORT_DESCRIPTION_TEXT).getText().toLowerCase();
-                    Assert.assertTrue(actualProductDescriptionContent.contains(searchText), "Verify the product displayed contains the searched term.");
+                    verify.assertTrue(actualProductDescriptionContent.contains(searchText), "Verify the product displayed contains the searched term.");
 
                     //Switching back to the default content.
                     driver.switchTo().defaultContent();
@@ -82,7 +83,7 @@ public class Scenario1Tests extends CommonWebTest {
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(ProductScreen.SEARCHED_NO_RESULT_LABEL)));
         String actualTextLabel = driver.findElement(By.xpath(ProductScreen.SEARCHED_NO_RESULT_LABEL)).getText();
-        Assert.assertEquals(actualTextLabel, "No results were found for your search \"" + searchText + "\"", "Verify the search label should match with the searched term, and no results displayed");
+        verify.assertEquals(actualTextLabel, "No results were found for your search \"" + searchText + "\"", "Verify the search label should match with the searched term, and no results displayed");
     }
 
     @Test(description = "Verify that the users are able to search for an item using the search bar with nested html data.")
@@ -95,6 +96,6 @@ public class Scenario1Tests extends CommonWebTest {
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath(HomeScreen.SEARCH_BUTTON)));
         driver.findElement(By.xpath(HomeScreen.SEARCH_BUTTON)).click();
 
-        Assert.assertEquals(driver.getTitle(), "Error 406 - Not Acceptable", "Verify the title 'Error 406 - Not Acceptable'");
+        verify.assertEquals(driver.getTitle(), "Error 406 - Not Acceptable", "Verify the title 'Error 406 - Not Acceptable'");
     }
 }
