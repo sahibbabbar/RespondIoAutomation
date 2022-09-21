@@ -22,7 +22,7 @@ public class Scenario2Tests extends CommonWebTest {
     private int RANDOM_CATEGORY_INDEX;
     private int RANDOM_COLOR_INDEX;
 
-    @Test
+    @Test(description = "Verify that the users are able to filter search results under `Women` category by `Color` and `Category`")
     public void testFilterResultsUnderWomenByColorAndCategory() {
         // Navigate to the homepage
         driver.get(Urls.URL_HOME_PAGE);

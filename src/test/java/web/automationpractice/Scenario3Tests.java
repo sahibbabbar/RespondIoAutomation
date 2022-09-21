@@ -19,7 +19,7 @@ import java.util.Random;
 public class Scenario3Tests extends CommonWebTest {
     private String productName;
 
-    @Test
+    @Test(description = "Verify that the users are able to view the details of any clothing item from the `POPULAR` section and add them to the cart.")
     public void testFilterResultsUnderWomenByColorAndCategory() {
         // Navigate to the homepage
         driver.get(Urls.URL_HOME_PAGE);
