@@ -1,7 +1,7 @@
 package api;
 
 
-import Utils.Verify;
+import utils.Verify;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.testng.annotations.BeforeClass;
 
