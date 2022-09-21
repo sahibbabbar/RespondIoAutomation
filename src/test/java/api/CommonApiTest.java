@@ -9,8 +9,4 @@ public class CommonApiTest {
     public CommonApiTest() {
         mapper = new ObjectMapper();
     }
-
-
-//    String body = mapper.writer().withDefaultPrettyPrinter().writeValueAsString(booking);
-//    System.out.println(body);
 }
