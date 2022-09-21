@@ -17,9 +17,6 @@ import java.util.Random;
 
 /**
  * Scenario 1: Users are able to search for an item using the search bar.
- * - Navigate to the homepage
- * - Put any search term in the search bar
- * - Validate that the results returned matches the search term
  */
 public class ScenarioOneTests extends CommonWebTest {
 
